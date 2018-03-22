@@ -1,14 +1,16 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
 import {Row,Col,Card,Form,FormGroup,Input,Button,Label,Table,Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
-import NavbarDashboard from './navbarDashboard'
-import Sidebar from './sidebar.js'
+import NavbarDashboard from '../navbarDashboard'
+import Sidebar from '../sidebar.js'
 import {Redirect} from 'react-router'
-import {getBlogsRequest} from '../../actions'
+import {getBlogsRequest} from '../../../actions'
+import AddNewBlog from './addNewBlog';
+import ShowBlogDetails from './ShowBlogDetails'
 class Blogs extends Component{
    constructor(props){
      super(props);
-     this.state={data_present:false,modal: false,blogKey:''}
+     this.state={data_present:false,modal: false,blogKey:'' , modalAdd:false, delBlogKey:''}
    }
   componentDidMount(){
       console.log('auth_token',this.props.data.auth_token);
@@ -27,6 +29,12 @@ toggle=()=>{
     });
   }
 
+  toggleAdd=()=>{
+    this.setState({
+      modalAdd:!this.state.modalAdd
+    });
+  }
+
   render(){
     if(!(this.props.data.logStatus)){
       return(
@@ -41,11 +49,20 @@ toggle=()=>{
     <Sidebar />
     </Col>
     <Col sm={{size:8,offset:1}} className="canvasforDashboard">
+    <Row>
+    <Col xs={{size:3}} className="title">Blogs </Col>
+    <Col xs={{size:2,offset:7}}>
+    <Button className="btn-add" onClick={this.toggleAdd}>Add New Blog</Button>
+    <Modal className="showModal" isOpen={this.state.modalAdd}>
+    <AddNewBlog toggleSubmit={this.toggleAdd}/>
+    </Modal>
+    </Col>
+    </Row>
     <Card className="cardForDashboard">
       <Row className="rowHead">
       <Col xs={{size:1}} className="colHead">S.No.</Col>
-      <Col xs={{size:3}} className="colHead">Course Name</Col>
-      <Col xs={{size:2}} className="colHead">Blog Name</Col>
+      <Col xs={{size:2}} className="colHead">Course Name</Col>
+      <Col xs={{size:3}} className="colHead">Blog Name</Col>
       <Col xs={{size:2}} className="colHead">Added by</Col>
       <Col xs={{size:2}} className="colHead">Updated by</Col>
       <Col xs={{size:2}} className="colHead">Status</Col>
@@ -57,43 +74,14 @@ toggle=()=>{
                                     modal:!(this.state.modal),
                                    blogKey:key})}}>
              <Col xs={{size:1}}  className="colBody">{key+1}.</Col>
-             <Col xs={{size:3}}  className="colBody">{value.course_name}</Col>
-             <Col xs={{size:2}} className="colBody">{value.blog_name}</Col>
+             <Col xs={{size:2}}  className="colBody">{value.course_name}</Col>
+             <Col xs={{size:3}} className="colBody">{value.blog_name}</Col>
              <Col xs={{size:2}} className="colBody">{value.added_by}</Col>
              <Col xs={{size:2}} className="colBody">{value.updated_by}</Col>
              <Col xs={{size:2}} className="colBody">{value.status}</Col>
            </Row>
            <Modal className="showModal" isOpen={this.state.modal&&(this.state.blogKey===key)}>
-           <ModalHeader className="colHead">{value.course_name}</ModalHeader>
-           <ModalBody>
-           <Row  className="rowBody">
-               <Col className="colHead" sm={{size:3}}>Blog Name</Col>
-               <Col className="colBody" sm={{size:8}}>{value.blog_name}</Col>
-           </Row>
-           <Row className="rowBody">
-               <Col className="colHead" sm={{size:3}}>Blog Info</Col>
-               <Col className="colBody" sm={{size:8}}>{value.blog_info}</Col>
-           </Row>
-           <Row className="rowBody">
-               <Col className="colHead" sm={{size:3}}>Image Link</Col>
-               <Col className="colBody" sm={{size:8}}>{value.image_link}</Col>
-           </Row>
-           <Row className="rowBody">
-               <Col className="colHead" sm={{size:3}}>Added By</Col>
-               <Col className="colBody" sm={{size:8}}>{value.added_by}</Col>
-           </Row>
-           <Row className="rowBody">
-               <Col className="colHead" sm={{size:3}}>Upated By</Col>
-               <Col className="colBody" sm={{size:8}}>{value.updated_by}</Col>
-           </Row>
-           <Row className="rowBody">
-               <Col className="colHead" sm={{size:3}}>Status</Col>
-               <Col className="colBody" sm={{size:8}}>{value.status}</Col>
-           </Row>
-           </ModalBody>
-           <ModalFooter>
-             <Button className="btn-modal" onClick={this.toggle}>Cancel</Button>
-           </ModalFooter>
+          <ShowBlogDetails index={key} value={value} toggle={this.toggle}/ >
          </Modal>
          </div>
         )}

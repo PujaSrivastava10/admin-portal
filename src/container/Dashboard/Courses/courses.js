@@ -71,9 +71,8 @@ toggle=()=>{
       <Col className="colHead" sm={{size:1}}>S.No.</Col>
       <Col className="colHead" sm={{size:3}}>Course Name</Col>
       <Col className="colHead" sm={{size:3}}>Added by</Col>
-      <Col className="colHead" sm={{size:2}}>Updated by</Col>
+      <Col className="colHead" sm={{size:3}}>Updated by</Col>
       <Col className="colHead" sm={{size:2}}>Status</Col>
-        <Col className="colHead" sm={{size:1}}></Col>
     </Row>
       <div>
        {this.props.data.course_data.map((value,key)=>
@@ -85,10 +84,8 @@ toggle=()=>{
              <Col className="colBody" sm={{size:1}}>{key+1}.</Col>
              <Col className="colBody" sm={{size:3}}>{value.course_name}</Col>
              <Col className="colBody"sm={{size:3}}>{value.added_by}</Col>
-              <Col className="colBody"sm={{size:2}}>{value.updated_by}</Col>
+              <Col className="colBody"sm={{size:3}}>{value.updated_by}</Col>
              <Col className="colBody" sm={{size:2}}>{value.status}</Col>
-             <Col className="colBody"sm={{size:1}}><span>Edit <FaEdit /></span></Col>
-
            </Row>
           <Modal className="showModal" isOpen={this.state.modal&&(this.state.courseKey===key)}>
           <ShowModal index={key} toggle={this.toggle}/>

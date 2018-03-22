@@ -4,8 +4,8 @@ import SignUpForm from './container/signUpForm'
 import Dashboard from './container/Dashboard/dashboard';
 import Courses from './container/Dashboard/Courses/courses';
 import Stories from './container/Dashboard/Stories/stories'
-import Blogs from './container/Dashboard/blogs'
-import Projects from './container/Dashboard/projects'
+import Blogs from './container/Dashboard/Blogs/blogs'
+import Projects from './container/Dashboard/Projects/projects'
 import Quizes from './container/Dashboard/Quiz/quizes.js'
 import Users from './container/Dashboard/Users/users.js'
 import Admins from './container/Dashboard/Admin/admin.js'

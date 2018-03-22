@@ -7,23 +7,39 @@ import Courses from './courses'
 class AddNewCourse extends Component {
   constructor(props) {
     super(props);
-    this.state={course_name:'',course_info:'',course_details:'',video_link:'',renderCourse:false}
+    this.state={course_name:'',course_info:'',course_details:'',sampleFile:'',video_link:'',renderCourse:false}
   }
   handleOnChange=(event)=>{
     this.setState({[event.target.name]:event.target.value})
   }
+  handleOnChangefile=(event)=>{
+    console.log('file : ',event.target.files);
+    this.setState({sampleFile:event.target.files[0]})
+  }
   handleOnSubmit=()=>{
-    console.log(this.state);
-      this.props.addCoursesRequest(this.props.data.auth_token,this.props.data.user_id,this.state);
-      console.log(this.state.course_name.trim());
-      console.log(this.state);
+    var formData=new FormData();
+    formData.append('course_name',this.state.course_name);
+    formData.append('course_details',this.state.course_details);
+    formData.append('course_info',this.state.course_info);
+    formData.append('video_link',this.state.video_link);
+    formData.append('sampleFile',this.state.sampleFile);
+
+    for(var pair of formData.entries()) {
+     console.log(pair[0]+ ', '+ pair[1]);
+     }
+     console.log('course uuid ::::::',formData.get("uuid"));
+       this.props.addCoursesRequest(this.props.data.auth_token,this.props.data.user_id,formData);
       if((this.state.course_name.trim()!=='')&&
       (this.state.course_info.trim()!=='')&&
       (this.state.course_details.trim()!=='')&&
-      (this.state.video_link.trim()!=='')){
+      (this.state.video_link.trim()!==''&&this.state.sampleFile!=='')){
       this.setState({renderCourse:true})
        this.props.toggleSubmit();
     }
+      else {
+        alert('fill in all the details to submit')
+      }
+
   }
   toggleAdd=()=>{
     this.props.toggleSubmit();
@@ -36,7 +52,7 @@ class AddNewCourse extends Component {
     }
     else{
     return(
-      <form onSubmit={this.handleOnSubmit}>
+      <form>
       <ModalHeader className="colHead">course_name</ModalHeader>
       <ModalBody>
       <Row  className="rowBody">
@@ -58,6 +74,12 @@ class AddNewCourse extends Component {
           </Col>
       </Row>
       <Row className="rowBody">
+          <Col className="colHead" sm={{size:3}}>Course Logo</Col>
+          <Col className="colBody" sm={{size:8,offset:1}}>
+          <Input type="file" name="sampleFile" onChange={this.handleOnChangefile} />
+          </Col>
+      </Row>
+      <Row className="rowBody">
           <Col className="colHead" sm={{size:3}}>Course Details</Col>
           <Col className="colBody" sm={{size:8,offset:1}}>
           <Input name="course_details" onChange={this.handleOnChange} required/>
@@ -65,7 +87,7 @@ class AddNewCourse extends Component {
       </Row>
       </ModalBody>
       <ModalFooter>
-      <Button className="btn-modal" type="submit">Submit</Button>
+      <Button className="btn-modal" onClick={this.handleOnSubmit}>Submit</Button>
       <Button className="btn-modal" onClick={this.toggleAdd}>Cancel</Button>
        </ModalFooter>
      </form>

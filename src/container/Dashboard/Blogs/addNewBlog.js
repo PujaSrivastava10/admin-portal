@@ -2,17 +2,17 @@ import React,{Component} from 'react';
 import {Modal, ModalHeader, ModalBody,ModalFooter,Row,Col,Button,Input,
 Dropdown, DropdownToggle, DropdownMenu, DropdownItem} from 'reactstrap';
 import {connect} from 'react-redux';
-import {addStoriesRequest,getCoursesRequest} from '../../../actions';
-import Stories from './stories';
+import {addBlogRequest,getCoursesRequest} from '../../../actions';
+import Blogs from './blogs';
 import axios from 'axios';
 
-class AddNewStory extends Component {
+class AddNewBlog extends Component {
   constructor(props) {
     super(props);
-    this.state={story_name:'',story_info:'',
-    story_details:'',sampleFile:'',thumbFile:'',
+    this.state={blog_name:'',blog_info:'',
+    blog_details:'',image_link:'',
     renderCourse:false,dropdownOpen:false,
-    dropDownValue:'---select the course to add a story----',
+    dropDownValue:'---select the course to add a blog----',
     key:0
     }
   }
@@ -20,26 +20,25 @@ class AddNewStory extends Component {
     this.setState({[event.target.name]:event.target.value})
   }
   handleOnChangefile=(event)=>{
-    this.setState({sampleFile:event.target.files[0],thumbFile:event.target.files[0]});
+    this.setState({image_link:event.target.files[0]});
      }
 
 
   handleOnSubmit=()=>{
     var formData = new FormData();
-    formData.append('story_name',this.state.story_name);
-    formData.append('story_details',this.state.story_details);
-    formData.append('story_info',this.state.story_info);
+    formData.append('blog_name',this.state.blog_name);
+    formData.append('blog_details',this.state.blog_details);
+    formData.append('blog_info',this.state.blog_info);
     formData.append('course_uuid',this.props.data.course_data[this.state.key].uuid);
-    formData.append('sampleFile', this.state.sampleFile);
-      formData.append('thumbFile', this.state.thumbFile);
+    formData.append('sampleFile', this.state.image_link);
     for(var pair of formData.entries()) {
      console.log(pair[0]+ ', '+ pair[1]);
      }
-      this.props.addStoriesRequest(this.props.data.auth_token,this.props.data.user_id,formData);
+      this.props.addBlogRequest(this.props.data.auth_token,this.props.data.user_id,formData);
       //console.log(this.state.course_name.trim());
-      if((this.state.story_name.trim()!=='')&&
-      (this.state.story_info.trim()!=='')&&
-      (this.state.story_details.trim()!==''&&this.state.sampleFile!=='',this.state.thumbFile!=='')){
+      if((this.state.blog_name.trim()!=='')&&
+      (this.state.blog_info.trim()!=='')&&
+      (this.state.blog_details.trim()!==''&&this.state.image_link!=='')){
       this.setState({renderCourse:true})
        this.props.toggleSubmit();
     }
@@ -58,7 +57,7 @@ class AddNewStory extends Component {
   render(){
     if(this.state.renderCourse){
       return(
-      <Stories />
+      <Blogs />
     )
     }
     else{
@@ -67,7 +66,7 @@ class AddNewStory extends Component {
         console.log('state',this.state);
     return(
       <div>
-      <ModalHeader className="colHead">Enter details to add a New Story</ModalHeader>
+      <ModalHeader className="colHead">Enter details to add a New Blog</ModalHeader>
       <ModalBody>
       <Row  className="rowBody">
           <Col className="colHead" sm={{size:3}}>Course Name</Col>
@@ -88,34 +87,28 @@ class AddNewStory extends Component {
           </Col>
       </Row>
       <Row  className="rowBody">
-          <Col className="colHead" sm={{size:3}}>Story Name</Col>
+          <Col className="colHead" sm={{size:3}}>Blog Name</Col>
           <Col className="colBody" sm={{size:8,offset:1}}>
-          <Input name="story_name" onChange={this.handleOnChange} required/>
+          <Input name="blog_name" onChange={this.handleOnChange} required/>
 
           </Col>
       </Row>
       <Row className="rowBody">
-          <Col className="colHead" sm={{size:3}}>Story Info</Col>
+          <Col className="colHead" sm={{size:3}}>Blog Info</Col>
           <Col className="colBody" sm={{size:8,offset:1}}>
-          <Input name="story_info" onChange={this.handleOnChange} required/>
+          <Input name="blog_info" onChange={this.handleOnChange} required/>
           </Col>
       </Row>
       <Row className="rowBody">
-          <Col className="colHead" sm={{size:3}}>Story Details</Col>
+          <Col className="colHead" sm={{size:3}}>Blog Details</Col>
           <Col className="colBody" sm={{size:8,offset:1}}>
-          <Input name="story_details" onChange={this.handleOnChange} required/>
+          <Input name="blog_details" onChange={this.handleOnChange} required/>
           </Col>
       </Row>
       <Row className="rowBody">
           <Col className="colHead" sm={{size:3}}>Image Link</Col>
           <Col className="colBody" sm={{size:8,offset:1}}>
-          <Input type="file" name="sampleFile" onChange={this.handleOnChangefile} required/>
-          </Col>
-      </Row>
-      <Row className="rowBody">
-          <Col className="colHead" sm={{size:3}}>Thumbnail Image Link</Col>
-          <Col className="colBody" sm={{size:8,offset:1}}>
-          <Input type="file" name="thumbFile" onChange={this.handleOnChangefile} required/>
+          <Input type="file" name="image_link" onChange={this.handleOnChangefile} required/>
           </Col>
       </Row>
       </ModalBody>
@@ -135,4 +128,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps,{addStoriesRequest})(AddNewStory);
+export default connect(mapStateToProps,{addBlogRequest})(AddNewBlog);

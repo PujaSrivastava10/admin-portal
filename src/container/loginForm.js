@@ -4,7 +4,7 @@ import NavbarLoginSignUp from './navbarLoginSignup';
 import axios from 'axios'
 import {host} from '../config/index.js'
 import {Redirect,Route} from 'react-router'
-import Dashboard from './Dashboard/dashboard';
+import Courses from './Dashboard/Courses/courses.js';
 import {adminLoginRequest} from '../actions';
 import {connect} from 'react-redux'
 
@@ -34,7 +34,7 @@ componentWillReceiveProps(nextProps){
   render(){
     if(this.state.loggedIn){
       return(
-      <Redirect to='/dashboard'/>)
+      <Redirect to='/dashboard/Courses'/>)
     }else{
       return(
       <div>

@@ -30,7 +30,7 @@ class Dashboard extends Component {
       </Col>
       <Col sm={{size:9}} className="canvasforDashboard">
       <h1 style={{}}>
-      Hey !!
+      Welcome Rohit!!!!
       </h1>
       </Col>
       </Row>

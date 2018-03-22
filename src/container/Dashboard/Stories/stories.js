@@ -6,6 +6,7 @@ import Sidebar from '../sidebar.js'
 import {Redirect} from 'react-router'
 import {getStoriesRequest} from '../../../actions'
 import AddNewStory from './addNewStory'
+import ShowStoryDetails from './ShowStoryDetails'
 class Stories extends Component{
    constructor(props){
      super(props);
@@ -80,36 +81,7 @@ toggle=()=>{
              <Col xs={{size:2}} className="colBody">{value.status}</Col>
            </Row>
            <Modal className="showModal" isOpen={this.state.modal&&(this.state.storyKey===key)}>
-           <ModalHeader className="colHead">{value.course_name}</ModalHeader>
-           <ModalBody>
-           <Row  className="rowBody">
-               <Col className="colHead" sm={{size:3}}>Story Name</Col>
-               <Col className="colBody" sm={{size:8}}>{value.story_name}</Col>
-           </Row>
-           <Row className="rowBody">
-               <Col className="colHead" sm={{size:3}}>Story Info</Col>
-               <Col className="colBody" sm={{size:8}}>{value.story_info}</Col>
-           </Row>
-           <Row className="rowBody">
-               <Col className="colHead" sm={{size:3}}>Image Link</Col>
-               <Col className="colBody" sm={{size:8}}>{value.image_link}</Col>
-           </Row>
-           <Row className="rowBody">
-               <Col className="colHead" sm={{size:3}}>Added By</Col>
-               <Col className="colBody" sm={{size:8}}>{value.added_by}</Col>
-           </Row>
-           <Row className="rowBody">
-               <Col className="colHead" sm={{size:3}}>Upated By</Col>
-               <Col className="colBody" sm={{size:8}}>{value.updated_by}</Col>
-           </Row>
-           <Row className="rowBody">
-               <Col className="colHead" sm={{size:3}}>Status</Col>
-               <Col className="colBody" sm={{size:8}}>{value.status}</Col>
-           </Row>
-           </ModalBody>
-           <ModalFooter>
-             <Button className="btn-modal" onClick={this.toggle}>Cancel</Button>
-           </ModalFooter>
+          <ShowStoryDetails index={key} value={value} toggle={this.toggle}/ >
          </Modal>
            </div>
         )}

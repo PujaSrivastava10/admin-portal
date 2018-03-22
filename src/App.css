@@ -142,7 +142,7 @@ Body{
   min-height: 4rem;
 }
 .colBody{
- margin: auto;
+
  font-weight: 500;
   word-break: break-all;
   padding: 5px;
@@ -150,7 +150,6 @@ Body{
 }
 .colHead{
   color:#42d9f4;
-  margin: auto;
   font-weight:bolder;
 }
 .showModal{

@@ -1,11 +1,12 @@
 import React,{Component} from 'react';
 import {connect} from 'react-redux';
-import {Row,Col,Card,Form,FormGroup,Input,Button,Label,Table,Collapse} from 'reactstrap'
+import {Row,Col,Card,Form,FormGroup,Input,Button,Label,Table,Collapse,Modal} from 'reactstrap'
 import NavbarDashboard from '../navbarDashboard'
 import Sidebar from '../sidebar.js'
 import {Redirect} from 'react-router'
 import {getQuizesRequest} from '../../../actions'
-import Options from './options'
+import Options from './options';
+import AddNewQuiz from './addNewQuiz'
 class Quizes extends Component{
    constructor(props){
      super(props);
@@ -14,6 +15,7 @@ class Quizes extends Component{
                   optionCollapse:false,
                    quizKey:0,
                     questionKey:0,
+                    modalAdd:false,
                      quizBorder:"none"}
    }
   componentDidMount(){
@@ -35,7 +37,11 @@ toggle=()=> {
   optionToggle=()=> {
       this.setState({ optionCollapse: !this.state.optionCollapse });
     }
-
+    toggleAdd=()=>{
+      this.setState({
+        modalAdd:!this.state.modalAdd
+      });
+    }
   render(){
     //let quizKey=0;
     console.log('quizKey',this.state.quizKey);
@@ -54,7 +60,15 @@ toggle=()=> {
     <Sidebar />
     </Col>
     <Col sm={{size:8,offset:1}} className="canvasforDashboard">
-
+    <Row>
+    <Col xs={{size:3}} className="title">Quizes </Col>
+    <Col xs={{size:2,offset:7}}>
+    <Button className="btn-add" onClick={this.toggleAdd}>Add New Quiz</Button>
+    <Modal className="showModal" isOpen={this.state.modalAdd}>
+    <AddNewQuiz toggleSubmit={this.toggleAdd}/>
+    </Modal>
+    </Col>
+    </Row>
     <Card className="cardForDashboard">
     <div style={{padding:"20px"}}>
     <Row className="rowHead">
