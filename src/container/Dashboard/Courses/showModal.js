@@ -6,7 +6,7 @@ import {updateCourseRequest,getCoursesRequest,getCoursesDetailsRequest,deleteCou
 class ShowModal extends Component{
   constructor(props){
     super(props);
-    const valueData=this.props.data.story_data[this.props.index];
+    const valueData=this.props.data.course_data[this.props.index];
     const value=this.props.data;
     this.state={update:false,present:false,
                course_name:value.course_name,
@@ -178,7 +178,7 @@ class ShowModal extends Component{
       </ModalBody>
       <ModalFooter>
         <Button className="btn-modal" onClick={this.update}>Update</Button>
-          <Button className="btn-modal" onClick={this.delete}>Inactive Blog</Button>
+          <Button className="btn-modal" onClick={this.delete}>Inactivate Course</Button>
         <Button className="btn-modal" onClick={this.toggle}>Cancel</Button>
       </ModalFooter>
       </div>

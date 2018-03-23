@@ -172,7 +172,7 @@ class ShowProjectDetails extends Component{
       </ModalBody>
       <ModalFooter>
         <Button className="btn-modal" onClick={this.update}>Update</Button>
-        <Button className="btn-modal" onClick={this.delete}>Inactive Blog</Button>
+        <Button className="btn-modal" onClick={this.delete}>Inactivate Project</Button>
         <Button className="btn-modal" onClick={this.toggle}>Cancel</Button>
       </ModalFooter>
       </div>
